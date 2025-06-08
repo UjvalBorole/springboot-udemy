@@ -1,8 +1,0 @@
-services:
-  app:
-    build:
-      context: ./ecom-application
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/temp
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
