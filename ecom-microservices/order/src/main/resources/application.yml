@@ -14,20 +14,33 @@ spring:
 #      ddl-auto: create
 
 
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/order
+#    username: root
+#    password: root
+#
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:mysql://mysql:3306/ordernproduct   #jdbc:mysql://localhost:3307/ordernproduct
     username: root
     password: root
 
   jpa:
-    database: POSTGRESQL
     show-sql: true
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
+        format_sql: true
 
 server:
   port: 8083

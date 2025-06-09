@@ -14,9 +14,10 @@ spring:
 #      ddl-auto: create
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/product
-    username: root
-    password: root
+#    url: jdbc:postgresql://localhost:5432/product
+    url: jdbc:postgresql://ep-royal-poetry-abgddkkd-pooler.eu-west-2.aws.neon.tech/product?sslmode=require
+    username: product_owner
+    password: npg_lSOij6PmMA9q
 
   jpa:
     database: POSTGRESQL

@@ -1,38 +1,53 @@
-version: '3.8'
-
 services:
-  postgres:
-    container_name: postgres_container
-    image: postgres:14
+  mysql:
+    container_name: mysql_container
+    image: mysql:8
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-    volumes:
-      - postgres:/var/lib/postgresql/data
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ordernproduct
     ports:
-      - "5432:5432"
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
     networks:
-      - postgres
+      - spring-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    container_name: phpmyadmin_container
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8484:80"
+    networks:
+      - spring-network
     restart: unless-stopped
 
-  pgadmin:
-    container_name: pgadmin_container
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin:/var/lib/pgadmin
+  order:
+    container_name: order_service_container
+    build:
+      context: ./order
+      dockerfile: Dockerfile
     ports:
-      - "5050:80"
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
     networks:
-      - postgres
+      - spring-network
     restart: unless-stopped
 
 volumes:
-  postgres:
-  pgadmin:
+  mysql_data:
 
 networks:
-  postgres:
+  spring-network:
+    driver: bridge

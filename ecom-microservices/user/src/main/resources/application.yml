@@ -2,6 +2,7 @@ spring:
   application:
     name: User-service
 
+#configuration for h2 or mysql
 #  h2:
 #    console:
 #      enabled: true
@@ -13,20 +14,28 @@ spring:
 #    hibernate:
 #      ddl-auto: create
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/userdb
-    username: root
-    password: root
+#  http://localhost:5050/browser/ pg admin uri
+#configuration for postgres
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/userdb
+#    username: root
+#    password: root
+#
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
+#configuration for mongodb
+  data:
+   mongodb:
+     uri: mongodb://localhost:27017/userdb  # mongodb compass not cloud
+#     uri: mongodb+srv://boroleujval4:pU9qMF5rNcKh3ZI0@ecom.vlo5qmn.mongodb.net/?retryWrites=true&w=majority&appName=ecom  #for cloud
+     database: userdb
 server:
   port: 8082
 
